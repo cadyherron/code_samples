@@ -48,8 +48,6 @@ def find_duplicate_files(starting_directory):
                     results.append((first_file_name, current_path))
                 else:
                     results.append((current_path, first_file_name))
-                print(f"Here are the duplicates: {results}")
-                return
             # no duplicate yet
             else:
                 all_files[file_md5] = (current_path, os.path.getmtime(current_path))
