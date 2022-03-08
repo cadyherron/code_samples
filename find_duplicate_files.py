@@ -27,34 +27,36 @@ You can assume each file was only duplicated once.
 import hashlib
 import os
 
-def find_duplicate_files():
+def find_duplicate_files(starting_directory):
     all_files = {}
+    stack = [starting_directory]
     results = []
-    root_dir = "/Users/juliaherron/Downloads"
-    for dir_name, subdir_list, file_list in os.walk(root_dir):
-        for short_name in file_list:
-            file_name = f"{root_dir}/{short_name}"
-            try:
-                file_md5 = hashlib.md5(open(file_name, "rb").read()).hexdigest()
-                # we found a duplicate
-                if all_files.get(file_md5):
-                    first_file_name, first_file_time = all_files[file_md5]
-                    # the file already in the map is newer
-                    if first_file_time > os.path.getmtime(file_name):
-                        results.append((first_file_name, file_name))
-                    else:
-                        results.append((file_name, first_file_name))
-                    print(f"Here are the duplicates: {results}")
-                    return
-                # no duplicate yet
-                else:
-                    all_files[file_md5] = (file_name, os.path.getmtime(file_name))
 
-            except FileNotFoundError:
-                print(f"Cannot hash file {file_name}")
+    while len(stack) > 0:
+        current_path = stack.pop()
+        if os.path.isdir(current_path):
+            for path in os.listdir(current_path):
+                full_path = os.path.join(current_path, path)
+                stack.append(full_path)
+        else:
+            file_md5 = hashlib.md5(open(current_path, "rb").read()).hexdigest()
+            # we found a duplicate
+            if all_files.get(file_md5):
+                first_file_name, first_file_time = all_files[file_md5]
+                # the file already in the map is newer
+                if first_file_time > os.path.getmtime(current_path):
+                    results.append((first_file_name, current_path))
+                else:
+                    results.append((current_path, first_file_name))
+                print(f"Here are the duplicates: {results}")
+                return
+            # no duplicate yet
+            else:
+                all_files[file_md5] = (current_path, os.path.getmtime(current_path))
 
     print(f"Here are the duplicates: {results}")
+    return results
 
 
 if __name__ == "__main__":
-    find_duplicate_files()
+    find_duplicate_files("/Users/juliaherron/Downloads")
