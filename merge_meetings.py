@@ -26,15 +26,14 @@ if we sort the list first, we can get O(nlogn)
 
 
 def merge_ranges(meetings):
-    meetings = sorted(meetings)
-    results = []
-    for index, meeting in enumerate(meetings):
-        if index == len(meetings) - 1:
-            break
-        if meeting[1] >= meetings[index+1][0]:
-            results.append((meeting[0], max(meeting[1], meetings[index+1][1])))
+    sorted_meetings = sorted(meetings)
+    results = [meetings[0]]
+    for this_start, this_end in sorted_meetings[1:]:
+        previous_start, previous_end = results[-1]
+        if previous_end >= this_start:
+            results[-1] = (previous_start, max(previous_end, this_end))
         else:
-            results.append(meeting)
+            results.append((this_start, this_end))
 
     return results
 
