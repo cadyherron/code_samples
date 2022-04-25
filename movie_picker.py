@@ -7,10 +7,10 @@ Write a function that takes an integer flight_length (in minutes) and a list of 
 def movie_picker(flight_length, movie_lengths):
     sorted_lengths = sorted(movie_lengths)
     right_index = len(movie_lengths) - 1
-    for movie_length in movie_lengths:
-        if movie_length + movie_lengths[right_index] == flight_length:
+    for movie_length in sorted_lengths:
+        if movie_length + sorted_lengths[right_index] == flight_length:
             return True
-        elif movie_length + movie_lengths[right_index] > flight_length:
+        elif movie_length + sorted_lengths[right_index] > flight_length:
             return False
         else:
             right_index -= 1

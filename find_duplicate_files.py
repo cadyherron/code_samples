@@ -27,6 +27,7 @@ You can assume each file was only duplicated once.
 import hashlib
 import os
 
+
 def find_duplicate_files(starting_directory):
     all_files = {}
     stack = [starting_directory]
