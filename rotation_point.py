@@ -25,12 +25,12 @@ Write a function for finding the index of the "rotation point," which is where I
 
 
 def rotation_point(words):
-    floor_index = -1
-    ceiling_index = len(words)
-    while floor_index + 1 < ceiling_index:
+    floor_index = 0
+    ceiling_index = len(words) - 1
+    while floor_index < ceiling_index:
         guess_index = floor_index + ((ceiling_index - floor_index) // 2)
 
-        if words[guess_index] >= words[floor_index + 1]:
+        if words[guess_index] >= words[0]:
             floor_index = guess_index
         else:
             ceiling_index = guess_index
