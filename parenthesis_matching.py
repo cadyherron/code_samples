@@ -26,10 +26,6 @@ def matching(input_string, opener_index):
     raise ValueError("No matching closing parenthesis.")
 
 
-
-
-
-
 def parenthesis_matching(input_string, open_index):
     # if we see a paren BEFORE opening_index, we need to see a paren AFTER our target
     # we need to see x number of ) before we get to the one we want
