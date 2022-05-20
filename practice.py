@@ -47,3 +47,60 @@ def insert(root, value):
         root.left = insert(root.left, value)
 
     return root
+
+
+def merge_sort(input_array):
+    if len(input_array) > 1:
+        mid = len(input_array) // 2
+        left = input_array[:mid]
+        right = input_array[mid:]
+
+        merge_sort(left)
+        merge_sort(right)
+
+        l = 0
+        r = 0
+        i = 1
+
+        while l < len(left) and r < len(right):
+            if left[l] <= right[r]:
+                input_array[i] = left[l]
+                l += 1
+            else:
+                input_array[i] = right[r]
+                r += 1
+
+        while l < len(left):
+            input_array[i] = left[l]
+            l += 1
+            i += 1
+
+        while r < len(right):
+            input_array[i] = right[r]
+            r += 1
+            i += 1
+
+
+
+class BinaryTreeNode:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+
+def insert(root, value):
+    if root is None:
+        return BinaryTreeNode(value)
+    else:
+        if root.value == value:
+            return root
+        if root.value < value:
+            root.right = insert(root.right, value)
+        else:
+            root.left = insert(root.left, value)
+    return root
+
+
+# FIFO queue BFS
+# LIFO stack DFS

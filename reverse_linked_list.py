@@ -19,7 +19,6 @@ def reverse_linked_list(head):
     """
     current_node = head
     previous_node = None
-    next_node = None
     while current_node:
         next_node = current_node.next
         current_node.next = previous_node
